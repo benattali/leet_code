@@ -1,3 +1,13 @@
+class Solution:
+    def twoSum(self, nums: list[int], target: int) -> list[int]:
+        complements = {} # val : index
+
+        for idx, num in enumerate(nums):
+            diff = target - num
+            if diff in complements:
+                return [complements[diff], idx]
+            complements[num] = idx
+
 # class Solution:
 #     def twoSum(self, nums: list[int], target: int) -> list[int]:
 #         complements = [None] * len(nums)
@@ -21,29 +31,29 @@
 #         return False
 
 
-class Solution:
-    def twoSum(self, nums: list[int], target: int) -> list[int]:
-        complements = {}
-        halfTarget = target / 2
+# class Solution:
+#     def twoSum(self, nums: list[int], target: int) -> list[int]:
+#         complements = {}
+#         halfTarget = target / 2
 
-        for n in nums:
-            complements[n] = target - n
+#         for n in nums:
+#             complements[n] = target - n
 
-        for num in complements:
-            comp = complements[num]
-            if comp in nums:
-                if comp == halfTarget:
-                    if nums.count(comp) == 2:
-                        indexOne = nums.index(num)
-                        indexTwo = nums.index(comp, indexOne + 1)
-                    else:
-                        continue
-                else:
-                    indexOne = nums.index(num)
-                    indexTwo = nums.index(comp)
-                break
+#         for num in complements:
+#             comp = complements[num]
+#             if comp in nums:
+#                 if comp == halfTarget:
+#                     if nums.count(comp) == 2:
+#                         indexOne = nums.index(num)
+#                         indexTwo = nums.index(comp, indexOne + 1)
+#                     else:
+#                         continue
+#                 else:
+#                     indexOne = nums.index(num)
+#                     indexTwo = nums.index(comp)
+#                 break
 
-        return [indexOne, indexTwo]
+#         return [indexOne, indexTwo]
 
 
 ans = Solution().twoSum([3, 3], 6)
