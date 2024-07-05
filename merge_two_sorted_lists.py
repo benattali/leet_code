@@ -4,68 +4,62 @@ class ListNode:
         self.val = val
         self.next = next
 
-
 class Solution:
-    def add_node(self, node: ListNode) -> ListNode:
-        while node.next:
-            node = node.next
-        return node
+    def mergeTwoLists(self, list1: ListNode, list2: ListNode) -> ListNode:
+        if not list1 and not list2:
+            return ListNode().next
+        elif not list1:
+            return list2
+        elif not list2:
+            return list1
 
-    def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
-        if not l1 and not l2:
-            return []
-        if l1 and not l2:
-            return l1
-        if l2 and not l1:
-            return l2
-
-        if l1.val < l2.val:
-            head_val = l1.val
-            l1 = l1.next
+        if list1.val <= list2.val:
+            merged_list = ListNode(list1.val)
+            list1 = list1.next
         else:
-            head_val = l2.val
-            l2 = l2.next
-        root = ListNode(head_val)
+            merged_list = ListNode(list2.val)
+            list2 = list2.next
 
-        while l1 and l2:
-            if l1.val < l2.val:
-                node = ListNode(l1.val)
-                tail = self.add_node(root)
-                tail.next = node
-                l1 = l1.next
+        while list1:
+            if not list2:
+                self.findTail(merged_list).next = ListNode(list1.val)
+                list1 = list1.next
+            elif list1.val <= list2.val:
+                self.findTail(merged_list).next = ListNode(list1.val)
+                list1 = list1.next
             else:
-                node = ListNode(l2.val)
-                tail = self.add_node(root)
-                tail.next = node
-                l2 = l2.next
+                self.findTail(merged_list).next = ListNode(list2.val)
+                list2 = list2.next
 
-        while l1:
-            node = ListNode(l1.val)
-            tail = self.add_node(root)
-            tail.next = node
-            l1 = l1.next
+        while list2:
+            self.findTail(merged_list).next = ListNode(list2.val)
+            list2 = list2.next
 
-        while l2:
-            node = ListNode(l2.val)
-            tail = self.add_node(root)
-            tail.next = node
-            l2 = l2.next
+        self.printList(merged_list)
+        return merged_list
 
-        return root
+    def printList(self, linked_list):
+        if linked_list == None:
+            return
+        print(linked_list.val)
+        self.printList(linked_list.next)
 
-
-l1_head = ListNode(1)
-l1_2 = ListNode(2)
-l1_4 = ListNode(4)
-l1_head.next = l1_2
-l1_2.next = l1_4
-
-l2_head = ListNode(1)
-l2_3 = ListNode(3)
-l2_4 = ListNode(4)
-l2_head.next = l2_3
-l2_3.next = l2_4
+    def findTail(self, linked_list):
+        while linked_list.next:
+            linked_list = linked_list.next
+        return linked_list
 
 
-test = Solution().mergeTwoLists(l1_head, l2_head)
-print(test)
+h_1 = ListNode(1)
+h1_2 = ListNode(2)
+h1_4 = ListNode(4)
+h_1.next = h1_2
+h1_2.next = h1_4
+
+h_2 = ListNode(1)
+h1_3 = ListNode(3)
+h1_4 = ListNode(4)
+h_2.next = h1_3
+h1_3.next = h1_4
+
+Solution().mergeTwoLists(h_1, h_2)
